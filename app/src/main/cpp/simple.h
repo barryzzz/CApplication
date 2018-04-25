@@ -8,6 +8,7 @@
 #endif //CAPPLICATION_SIMPLE_H
 
 
+
 void simple();
 
 
@@ -18,3 +19,5 @@ int *sort1(int data[],int count);
 
 
 int parse(const char *monitor);
+
+

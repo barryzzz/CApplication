@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -32,10 +34,17 @@ public class MainActivity extends AppCompatActivity {
         user.id = 1001;
         user.city = "Gz";
         user.name = "lsl";
+        ArrayList<User> users = new ArrayList<>();
+        users.add(user);
 
         JNINativeBridge.classSort(user);
 
         JNINativeBridge.pareseJson(getJson());
+
+        JNINativeBridge.getListUsers(users);
+
+        List<User> list = JNINativeBridge.getListData();
+        Log.e(TAG, "list大小:" + list.size());
     }
 
     /**
