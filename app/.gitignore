@@ -1,0 +1,4 @@
+/build
+.externalNativeBuild
+/CMakeFiles
+.DS_Store
