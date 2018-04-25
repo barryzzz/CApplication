@@ -16,3 +16,5 @@ void write();
 
 int *sort1(int data[],int count);
 
+
+int parse(const char *monitor);

@@ -11,6 +11,6 @@ public class JNINativeBridge {
 
     public static native void classSort(User users);
 
-
+    public static native int pareseJson(String json);
 
 }

@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         user.name = "lsl";
 
         JNINativeBridge.classSort(user);
+
+        JNINativeBridge.pareseJson(getJson());
     }
 
     /**
@@ -41,6 +43,28 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+
+    public static String getJson() {
+
+        return "{\n" +
+                "  \"name\": \"含有中文Awesome 4K\",\n" +
+                "  \"resolutions\": [\n" +
+                "    {\n" +
+                "      \"width\": 1280,\n" +
+                "      \"height\": 720\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"width\": 1920,\n" +
+                "      \"height\": 1080\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"width\": 3840,\n" +
+                "      \"height\": \"xxx\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+    }
 
 
 }

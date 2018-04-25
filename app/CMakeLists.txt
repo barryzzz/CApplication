@@ -14,6 +14,7 @@ add_library(
              src/main/cpp/test.cpp
              src/main/cpp/simple.c
              src/main/cpp/testextrn.cpp
+             src/main/cpp/cJSON.c
               )
 
 

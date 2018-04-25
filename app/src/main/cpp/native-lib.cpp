@@ -17,7 +17,7 @@ extern "C" {
 
 extern void testextran(); //通过存储类 extern调用
 
-typedef struct User{
+typedef struct User {
     int id;
     char *name;
     char *city;
@@ -63,8 +63,8 @@ JNIEXPORT void JNICALL
 Java_com_example_lishoulin_capplication_JNINativeBridge_classSort(JNIEnv *env, jclass type,
                                                                   jobject users) {
     struct User user;
-    user.name=(char *) malloc(sizeof(char)); //结构体成员是指针，需要进行初始化指针
-    user.city=(char *) malloc(sizeof(char)); //结构体成员是指针，需要进行初始化指针
+    user.name = (char *) malloc(sizeof(char)); //结构体成员是指针，需要进行初始化指针
+    user.city = (char *) malloc(sizeof(char)); //结构体成员是指针，需要进行初始化指针
 //    jclass jcUser = env->FindClass("com/example/lishoulin/capplication/User");
 
     jclass jcUser = env->GetObjectClass(users);
@@ -90,4 +90,17 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_classSort(JNIEnv *env, j
 
     __android_log_print(ANDROID_LOG_ERROR, "info---->", "user city:%s \n", user.city);
 
+}
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_com_example_lishoulin_capplication_JNINativeBridge_pareseJson(JNIEnv *env, jclass type,
+                                                                   jstring json_) {
+    const char *json = env->GetStringUTFChars(json_, 0);
+
+    int state = parse(json);
+
+    env->ReleaseStringUTFChars(json_, json);
+
+    return state;
 }
