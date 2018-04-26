@@ -42,6 +42,8 @@ Java_com_example_lishoulin_capplication_MainActivity_stringFromJNI(
     simple();
     write();
 
+    learn_c();
+
 
     return env->NewStringUTF(hello.c_str());
 }

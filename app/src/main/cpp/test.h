@@ -13,3 +13,6 @@ void printhello();
 
 
 void start_thread();
+
+
+void learn_c();
