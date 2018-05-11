@@ -4,6 +4,8 @@ set(libraryname native-lib)
 set(list_one 1 2 3 4)
 set(list_two "5;6;7;8")
 
+#so输出的路径
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/libs/${ANDROID_ABI})
 
 add_library(
              ${libraryname}

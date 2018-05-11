@@ -187,3 +187,10 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_getListData(JNIEnv *env,
 
 
 }
+static JNINativeMethod gNative_lib[] = {
+
+};
+
+int register_native_lib(JNIEnv *env){
+
+}
