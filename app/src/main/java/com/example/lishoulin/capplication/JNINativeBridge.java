@@ -21,4 +21,7 @@ public class JNINativeBridge {
 
     public static native ArrayList<User> getListData();
 
+
+    public static native String stringFromNative();
+
 }

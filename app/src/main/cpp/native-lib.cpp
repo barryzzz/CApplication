@@ -30,11 +30,10 @@ typedef struct User {
 };
 
 
-extern "C" JNIEXPORT jstring
-JNICALL
-Java_com_example_lishoulin_capplication_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_example_lishoulin_capplication_JNINativeBridge_stringFromNative(JNIEnv *env, jclass type) {
+
     std::string hello = "Hello from C++";
     printhello();
     testextran();
@@ -44,6 +43,20 @@ Java_com_example_lishoulin_capplication_MainActivity_stringFromJNI(
 
     learn_c();
 
+    return env->NewStringUTF(hello.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_example_lishoulin_capplication_JniBridge_stringFromJNI(JNIEnv *env, jclass type) {
+    std::string hello = "Hello from C++";
+    printhello();
+    testextran();
+
+    simple();
+    write();
+
+    learn_c();
 
     return env->NewStringUTF(hello.c_str());
 }
@@ -191,6 +204,7 @@ static JNINativeMethod gNative_lib[] = {
 
 };
 
-int register_native_lib(JNIEnv *env){
+int register_native_lib(JNIEnv *env) {
 
 }
+

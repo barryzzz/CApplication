@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        tv.setText(JNINativeBridge.stringFromNative());
         int[] array = {3, 1, 2, 6, 8, 1};
         int[] temp = JNINativeBridge.sort1(array);
         Log.e(TAG, "onCreate: " + Arrays.toString(temp));
@@ -45,13 +45,6 @@ public class MainActivity extends AppCompatActivity {
         List<User> list = JNINativeBridge.getListData();
         Log.e(TAG, "list大小:" + list.size());
     }
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
-
 
     public static String getJson() {
 

@@ -10,14 +10,13 @@ class MainKtActivity : AppCompatActivity() {
 
     private val TAG = "MainKtActivity"
 
-    init {
-        System.loadLibrary("native-lib")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        sample_text.text = stringFromNative()
+
+        sample_text.text = JniBridge.stringFromJNI()
+
         val array = intArrayOf(3, 1, 2, 6, 8, 1)
         val temp = JNINativeBridge.sort1(array)
         Log.e(TAG, Arrays.toString(temp))
@@ -57,7 +56,11 @@ class MainKtActivity : AppCompatActivity() {
             "}"
 
 
-    external fun stringFromNative(): String
+    companion object {
+        init {
+            System.loadLibrary("native-lib")
+        }
+    }
 
 
 }
