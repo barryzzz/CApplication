@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CApplication</string>
+    <string name="req_premission">权限申请</string>
+    <string name="req_msg">在权限中开启位置信息权限，以正常使用办证位置定位功能</string>
+    <string name="req_cancle">取消</string>
+    <string name="req_setting">设置</string>
+
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Main2Activity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+            android:onClick="doStorage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="存储权限" />
+
+        <Button
+            android:onClick="doCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="相机权限" />
+
+        <Button
+            android:onClick="doSensors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="传感器权限" />
+
+        <Button
+            android:onClick="doLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="定位权限" />
+
+        <Button
+            android:onClick="doAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="悬浮窗权限" />
+
+    </LinearLayout>
+
+</ScrollView>
