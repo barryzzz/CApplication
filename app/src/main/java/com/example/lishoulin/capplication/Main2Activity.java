@@ -23,8 +23,6 @@ import android.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -44,17 +42,27 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        mContext=this;
+        mContext = this;
     }
 
     public void doStorage(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionsUtil.CallBack() {
+                @Override
+                public void onSuccess(String[] permissions) {
+                    toast("存储");
+                }
 
-            } else {
+                @Override
+                public void onFaild(String[] permissions) {
 
-            }
-            toast("存储");
+                }
+
+                @Override
+                public void onRefuse(String permission) {
+
+                }
+            });
         }
     }
 
@@ -85,36 +93,52 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void doSensors(View view) {
-        toast("传感器");
+        PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.BODY_SENSORS, new PermissionsUtil.CallBack() {
+            @Override
+            public void onSuccess(String[] permissions) {
+                toast("传感器");
+            }
+
+            @Override
+            public void onFaild(String[] permissions) {
+
+            }
+
+            @Override
+            public void onRefuse(String permission) {
+
+            }
+        });
+
     }
 
     public void doLocation(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                reqLocationPremission(this);
-            } else {
-                toast("定位");
-            }
-//            PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionsUtil.CallBack() {
-//                @Override
-//                public void onSuccess(String[] permissions) {
-//                    Log.e("info-->", Arrays.toString(permissions));
-//                }
-//
-//                @Override
-//                public void onFaild(String[] permissions) {
-//                    Log.e("info-->", Arrays.toString(permissions));
-//
-//                }
-//
-//                @RequiresApi(api = Build.VERSION_CODES.M)
-//                @Override
-//                public void onRefuse(String permission) {
-//                    Log.e("info-->", permission);
-//                    gotoSettingActivity(mContext);
-//
-//                }
-//            });
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                reqLocationPremission(this);
+//            } else {
+//                toast("定位");
+//            }
+            PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionsUtil.CallBack() {
+                @Override
+                public void onSuccess(String[] permissions) {
+                    Log.e("info-->", Arrays.toString(permissions));
+                }
+
+                @Override
+                public void onFaild(String[] permissions) {
+                    Log.e("info-->", Arrays.toString(permissions));
+
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onRefuse(String permission) {
+                    Log.e("info-->", permission);
+                    gotoSettingActivity(mContext);
+
+                }
+            });
         }
 
     }
@@ -135,13 +159,13 @@ public class Main2Activity extends AppCompatActivity {
     private void reqLocationPremission(Context context) {
         boolean isPremission = ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_COARSE_LOCATION);
         Log.e("info---->", "location isPremission:" + isPremission);
-        if (!isPremission) {
-            toast("已经禁止申请权限");
-            gotoSettingActivity(this);
-
-        } else {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, Type.CODE_LOCATION);
-        }
+//        if (!isPremission) {
+//            toast("已经禁止申请权限");
+//            gotoSettingActivity(this);
+//
+//        } else {
+        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, Type.CODE_LOCATION);
+//        }
 
     }
 
@@ -196,20 +220,5 @@ public class Main2Activity extends AppCompatActivity {
         Toast.makeText(this, str, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Type.CODE_STORAGE:
-                break;
-            case Type.CODE_CAMERA:
-                break;
-            case Type.CODE_LOCATION:
-                break;
-            case Type.CODE_SENSORS:
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                break;
-        }
-    }
+
 }
