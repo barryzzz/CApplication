@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +24,7 @@ import java.util.Arrays;
 
 public class Main2Activity extends AppCompatActivity {
 
+
     @IntDef({Type.CODE_STORAGE, Type.CODE_CAMERA, Type.CODE_SENSORS, Type.CODE_LOCATION})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
@@ -38,54 +37,51 @@ public class Main2Activity extends AppCompatActivity {
 
     private Context mContext;
 
+    private Permission mPermission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         mContext = this;
+        mPermission = new Permission(this);
     }
 
     public void doStorage(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionsUtil.CallBack() {
-                @Override
-                public void onSuccess(String[] permissions) {
-                    toast("存储");
-                }
+        mPermission.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionsFragment.CallBack() {
+            @Override
+            public void onGranted() {
+                toast("存储");
+            }
 
-                @Override
-                public void onFaild(String[] permissions) {
+            @Override
+            public void onRefused(String[] permissions) {
 
-                }
+            }
 
-                @Override
-                public void onRefuse(String permission) {
+            @Override
+            public void onRefusedAndDenied(String permission) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
     public void doCamera(View view) {
-        PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.CAMERA, new PermissionsUtil.CallBack() {
+        mPermission.requestPermission(Manifest.permission.CAMERA, new PermissionsFragment.CallBack() {
             @Override
-            public void onSuccess(String[] permissions) {
-                Log.e("info-->", Arrays.toString(permissions));
+            public void onGranted() {
                 toast("相机");
             }
 
             @Override
-            public void onFaild(String[] permissions) {
+            public void onRefused(String[] permissions) {
                 Log.e("info-->", Arrays.toString(permissions));
-
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onRefuse(String permission) {
+            public void onRefusedAndDenied(String permission) {
                 Log.e("info-->", permission);
                 gotoSettingActivity(mContext);
-
             }
         });
 
@@ -93,65 +89,84 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void doSensors(View view) {
-        PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.BODY_SENSORS, new PermissionsUtil.CallBack() {
+        mPermission.requestPermission(Manifest.permission.BODY_SENSORS, new PermissionsFragment.CallBack() {
             @Override
-            public void onSuccess(String[] permissions) {
+            public void onGranted() {
                 toast("传感器");
             }
 
             @Override
-            public void onFaild(String[] permissions) {
+            public void onRefused(String[] permissions) {
 
             }
 
             @Override
-            public void onRefuse(String permission) {
+            public void onRefusedAndDenied(String permission) {
 
             }
+
         });
 
     }
 
     public void doLocation(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                reqLocationPremission(this);
-//            } else {
-//                toast("定位");
-//            }
-            PermissionsUtil.newInstance(this).requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionsUtil.CallBack() {
-                @Override
-                public void onSuccess(String[] permissions) {
-                    Log.e("info-->", Arrays.toString(permissions));
-                }
 
-                @Override
-                public void onFaild(String[] permissions) {
-                    Log.e("info-->", Arrays.toString(permissions));
+        mPermission.requestPermission(Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionsFragment.CallBack() {
+            @Override
+            public void onGranted() {
+                toast("定位成功");
+            }
 
-                }
+            @Override
+            public void onRefused(String[] permissions) {
+                Log.e("info-->", Arrays.toString(permissions));
+            }
 
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                @Override
-                public void onRefuse(String permission) {
-                    Log.e("info-->", permission);
-                    gotoSettingActivity(mContext);
+            @Override
+            public void onRefusedAndDenied(String permission) {
+                Log.e("info-->", permission);
+                gotoSettingActivity(mContext);
+            }
 
-                }
-            });
-        }
+        });
+
 
     }
 
     public void doAlert(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(Application.getApplicationContext())) {
-                reqAlterPremission(Application.getApplicationContext());
-                return;
-            }
-            toast("悬浮窗");
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (!Settings.canDrawOverlays(Application.getApplicationContext())) {
+//                reqAlterPremission(Application.getApplicationContext());
+//                return;
+//            }
+//            toast("悬浮窗");
+//
+//        }
+        if (mPermission.isAlterWindow(this)) {
 
+        } else {
+            mPermission.requestAlertWindow(this);
         }
+    }
+
+    public void doMore(View view) {
+        mPermission.requestPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsFragment.CallBack() {
+            @Override
+            public void onGranted() {
+                toast("一波权限申请成功");
+            }
+
+            @Override
+            public void onRefused(String[] permissions) {
+                Log.e("info-->", Arrays.toString(permissions));
+            }
+
+            @Override
+            public void onRefusedAndDenied(String permission) {
+                Log.e("info-->", permission);
+            }
+        });
     }
 
 
@@ -192,7 +207,9 @@ public class Main2Activity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void gotoSettingActivity(final Context context) {
-
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.req_premission).setMessage(R.string.req_msg);
         builder.setPositiveButton(R.string.req_cancle, new DialogInterface.OnClickListener() {

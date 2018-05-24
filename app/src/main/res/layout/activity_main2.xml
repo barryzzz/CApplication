@@ -42,6 +42,12 @@
             android:layout_height="wrap_content"
             android:text="悬浮窗权限" />
 
+        <Button
+            android:text="一波权限申请"
+            android:onClick="doMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>
