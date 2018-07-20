@@ -24,4 +24,13 @@ public class JNINativeBridge {
 
     public static native String stringFromNative();
 
+
+    /**
+     * 合并apk
+     * @param oldFile
+     * @param newFile
+     * @param patchFile
+     */
+    public static native void fkDiff(String oldFile,String newFile,String patchFile);
+
 }
