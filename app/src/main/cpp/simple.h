@@ -12,7 +12,7 @@
 void simple();
 
 
-void write();
+void writeSample();
 
 
 int *sort1(int data[],int count);

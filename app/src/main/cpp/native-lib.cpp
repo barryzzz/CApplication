@@ -4,15 +4,18 @@
 #include <android/log.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/inotify.h>
+#include <unistd.h>
+#include <malloc.h>
 
 
 using namespace std;
 
 extern "C" {
-    #include "simple.h"
+#include "simple.h"
 }
-extern "C"{
-    #include "bspatch.h"
+extern "C" {
+#include "bspatch.h"
 }
 
 #define TAG "info--->"
@@ -41,7 +44,7 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_stringFromNative(JNIEnv 
     testextran();
 
     simple();
-    write();
+    writeSample();
 
     learn_c();
 
@@ -56,7 +59,7 @@ Java_com_example_lishoulin_capplication_JniBridge_stringFromJNI(JNIEnv *env, jcl
     testextran();
 
     simple();
-    write();
+    writeSample();
 
     learn_c();
 
@@ -226,9 +229,40 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_fkDiff(JNIEnv *env, jcla
     argv[2] = const_cast<char *>(newFile);
     argv[3] = const_cast<char *>(patchFile);
 
-    fkdiff(4,argv);
+    LOGE("oldfile:%s \n", argv[1]);
+    LOGE("difffile:%s \n", argv[3]);
+
+    fkdiff(4, argv);
+
+
+//
 
     env->ReleaseStringUTFChars(oldFile_, oldFile);
     env->ReleaseStringUTFChars(newFile_, newFile);
     env->ReleaseStringUTFChars(patchFile_, patchFile);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_lishoulin_capplication_JNINativeBridge_callUnInstallListener(JNIEnv *env,
+                                                                              jclass type,
+                                                                              jint version,
+                                                                              jstring path_) {
+    const char *path = env->GetStringUTFChars(path_, 0);
+    pid_t pid = fork();
+    if (pid < 0) {
+        LOGE("进程克隆失败");
+    } else if (pid > 0) {
+        LOGE("父进程");
+    } else {
+        LOGE("子进程！");
+        int fuile = inotify_init();
+        int watch = inotify_add_watch(fuile, path, IN_DELETE_SELF);
+        void *p = malloc(sizeof(struct inotify_event));
+        read(fuile, p, sizeof(struct inotify_event));
+        inotify_rm_watch(fuile, watch);
+        LOGD("接下来进行操作，来条状网页!!!");
+
+    }
+
+    env->ReleaseStringUTFChars(path_, path);
 }

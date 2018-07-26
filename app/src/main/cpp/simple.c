@@ -27,7 +27,7 @@ void simple() {
 }
 
 
-void write() {
+void writeSample() {
     __android_log_print(ANDROID_LOG_ERROR, TAG, "%s \n", "simple write");
 
     FILE *fp = NULL;

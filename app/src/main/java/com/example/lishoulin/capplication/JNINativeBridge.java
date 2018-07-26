@@ -33,4 +33,9 @@ public class JNINativeBridge {
      */
     public static native void fkDiff(String oldFile,String newFile,String patchFile);
 
+
+
+
+    public static native void callUnInstallListener(int version,String path);
+
 }
