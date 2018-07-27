@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
+
+       Log.e(TAG,pareseString("中文"));
     }
 
     /**
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNI();
 
     public native void fkDiff(String oldFile, String newFile, String patchFile);
+
+
+    public native String pareseString(String str);
+
+
 
     public void doClick(View view) {
 

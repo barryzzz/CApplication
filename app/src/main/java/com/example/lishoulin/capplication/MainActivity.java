@@ -48,18 +48,19 @@ public class MainActivity extends AppCompatActivity {
 
 //        List<User> list = JNINativeBridge.getListData();
 //        Log.e(TAG, "list大小:" + list.size());
-//        final File oldfile = new File(Environment.getExternalStorageDirectory(), "old.apk");
-//        final File newfile = new File(Environment.getExternalStorageDirectory(), "new.apk");
-//        final File difffile = new File(Environment.getExternalStorageDirectory(), "diff.patch");
-//        Log.e(TAG, "old:" + oldfile.getAbsolutePath());
-//        JNINativeBridge.callUnInstallListener(17,"data/data/com.example.lishoulin.capplication");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                JNINativeBridge.fkDiff(oldfile.getAbsolutePath(), newfile.getAbsolutePath(), difffile.getAbsolutePath());
-//
-//            }
-//        }).start();
+
+//        JNINativeBridge.callUnInstallListener(17, "data/data/com.example.lishoulin.capplication");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File oldfile = new File(Environment.getExternalStorageDirectory(), "old.apk");
+                File newfile = new File(Environment.getExternalStorageDirectory(), "new.apk");
+                File difffile = new File(Environment.getExternalStorageDirectory(), "diff.patch");
+                Log.e(TAG, "old:" + oldfile.getAbsolutePath());
+                JNINativeBridge.fkDiff(oldfile.getAbsolutePath(), newfile.getAbsolutePath(), difffile.getAbsolutePath());
+
+            }
+        }).start();
     }
 
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this,"apk合成成功",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "apk合成成功", Toast.LENGTH_LONG).show();
                     }
                 });
 

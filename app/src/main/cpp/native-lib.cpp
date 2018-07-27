@@ -32,7 +32,7 @@ typedef struct User {
     int id;
     char *name;
     char *city;
-};
+} myUser;
 
 
 extern "C"
@@ -203,13 +203,6 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_getListData(JNIEnv *env,
 
     return obj_ArrayList;
 
-
-}
-static JNINativeMethod gNative_lib[] = {
-
-};
-
-int register_native_lib(JNIEnv *env) {
 
 }
 
