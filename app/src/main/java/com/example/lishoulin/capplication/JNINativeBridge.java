@@ -35,7 +35,4 @@ public class JNINativeBridge {
 
 
 
-
-    public static native void callUnInstallListener(int version,String path);
-
 }

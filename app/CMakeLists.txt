@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.4.1) #cmake 最小版本
 
-set(libraryname diff)
+set(libraryname native-lib)
+set(libdiffname diff)
 set(list_one 1 2 3 4)
 set(list_two "5;6;7;8")
 
 #so输出的路径
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/libs/${ANDROID_ABI})
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI})
 
 
 
@@ -22,18 +23,24 @@ add_library(
               src/main/cpp/simple.c
               src/main/cpp/testextrn.cpp
               src/main/cpp/cJSON.c
-              src/main/cpp/native-lib.cpp
-              src/main/cpp/bspatch.c
-              src/main/cpp/bzip2/bzlib.c
-              src/main/cpp/bzip2/crctable.c
-              src/main/cpp/bzip2/compress.c
-              src/main/cpp/bzip2/decompress.c
-              src/main/cpp/bzip2/randtable.c
-              src/main/cpp/bzip2/blocksort.c
-              src/main/cpp/bzip2/huffman.c
-              src/main/cpp/bspatch.h
+
 
               )
+add_library(
+           ${libdiffname}
+
+           SHARED
+           src/main/cpp/native-diff.cpp
+           src/main/cpp/bspatch.c
+           src/main/cpp/bzip2/bzlib.c
+           src/main/cpp/bzip2/crctable.c
+           src/main/cpp/bzip2/compress.c
+           src/main/cpp/bzip2/decompress.c
+           src/main/cpp/bzip2/randtable.c
+           src/main/cpp/bzip2/blocksort.c
+           src/main/cpp/bzip2/huffman.c
+           src/main/cpp/bspatch.h
+)
 
 find_library(
               log-lib
@@ -43,6 +50,10 @@ find_library(
 
 target_link_libraries(
                       ${libraryname}
+
+                       ${log-lib} )
+target_link_libraries(
+                      ${libdiffname}
 
                        ${log-lib} )
 

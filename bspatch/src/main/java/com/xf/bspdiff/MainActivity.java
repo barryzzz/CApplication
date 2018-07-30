@@ -1,5 +1,6 @@
 package com.xf.bspdiff;
 
+import android.content.Context;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     public native String pareseString(String str);
 
+
+
+    public native int checkSignature(Context context);
 
 
     public void doClick(View view) {

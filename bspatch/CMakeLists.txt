@@ -17,6 +17,13 @@ add_library(
              src/main/cpp/bzip2/blocksort.c
              src/main/cpp/bzip2/huffman.c
              src/main/cpp/native-lib.cpp )
+add_library(
+             native-sign
+
+             SHARED
+
+             src/main/cpp/signature.cpp
+             )
 
 
 find_library(
@@ -28,6 +35,12 @@ find_library(
 
 target_link_libraries(
                        native-lib
+
+
+                       ${log-lib} )
+
+target_link_libraries(
+                       native-sign
 
 
                        ${log-lib} )

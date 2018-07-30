@@ -11,7 +11,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -19,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("diff");
+        System.loadLibrary("native-lib");
     }
 
     @Override
@@ -48,19 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        List<User> list = JNINativeBridge.getListData();
 //        Log.e(TAG, "list大小:" + list.size());
-
-//        JNINativeBridge.callUnInstallListener(17, "data/data/com.example.lishoulin.capplication");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File oldfile = new File(Environment.getExternalStorageDirectory(), "old.apk");
-                File newfile = new File(Environment.getExternalStorageDirectory(), "new.apk");
-                File difffile = new File(Environment.getExternalStorageDirectory(), "diff.patch");
-                Log.e(TAG, "old:" + oldfile.getAbsolutePath());
-                JNINativeBridge.fkDiff(oldfile.getAbsolutePath(), newfile.getAbsolutePath(), difffile.getAbsolutePath());
-
-            }
-        }).start();
     }
 
 
