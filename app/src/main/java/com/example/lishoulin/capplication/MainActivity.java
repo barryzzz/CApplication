@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -40,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<User> users = new ArrayList<>();
         users.add(user);
 
-//        JNINativeBridge.classSort(user);
-//
-//        JNINativeBridge.pareseJson(getJson());
+        JNINativeBridge.classSort(user);
 
-//        JNINativeBridge.getListUsers(users);
+        JNINativeBridge.pareseJson(getJson());
 
-//        List<User> list = JNINativeBridge.getListData();
-//        Log.e(TAG, "list大小:" + list.size());
+        JNINativeBridge.getListUsers(users);
+
+        List<User> list = JNINativeBridge.getListData();
+        Log.e(TAG, "list大小:" + list.size());
     }
 
 

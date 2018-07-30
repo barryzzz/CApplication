@@ -155,7 +155,7 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_getListUsers(JNIEnv *env
         jstring name = (jstring) env->GetObjectField(obj_user, jcUserName);
         jstring city = (jstring) env->GetObjectField(obj_user, jcUserCity);
 
-        const int userId = env->GetIntField(users, jcuserId);
+        const int userId = env->GetIntField(obj_user, jcuserId);
         const char *username = (char *) env->GetStringUTFChars(name, NULL);
         const char *usercity = (char *) env->GetStringUTFChars(city, NULL);
 
@@ -195,7 +195,7 @@ Java_com_example_lishoulin_capplication_JNINativeBridge_getListData(JNIEnv *env,
         env->SetObjectField(oj_user, jcUserCity, env->NewStringUTF("sz"));
 
         //添加到list集合
-        env->CallObjectMethod(obj_ArrayList, list_add, oj_user);
+        env->CallBooleanMethod(obj_ArrayList, list_add, oj_user);
 
     }
 
